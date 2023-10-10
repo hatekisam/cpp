@@ -20,12 +20,13 @@ int main()
 
     // But if we put the std::cin function before the getline function ther whitespace left by cini would be taken by getline and int cousese a bug so inteade we use
 
-    string address;
-    std::getline(cin >> std::ws, address);
+    string sentence;
+    std::getline(cin >> std::ws, sentence);
 
-    cout << "Hello " << name << "!" << std::endl;
-    cout << "You are " << age << " years old." << std::endl;
-    cout << "Your address is " << address  << std::endl;
+    cout << sentence << std::endl;
+    int numOfSpace=0;
+    for(auto i : sentence) if(isspace(i)) numOfSpace ++;
+    cout << "It has " << sentence.length() - numOfSpace << " characters." << std::endl;
 
 
         return 0;
