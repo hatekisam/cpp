@@ -38,70 +38,48 @@ std::map<std::string, int> units = {
 
 std::vector<std::string> splitString(const std::string &str)
 {
-    std::vector<std::string> words;
-    std::string word;
-    std::istringstream strStream(str);
-    while (std::getline(strStream, word, ' '))
-    {
-        words.push_back(word);
-    }
-    return words;
+	std::vector<std::string> words;
+	std::string word;
+	std::istringstream strStream(str);
+	while (std::getline(strStream, word, ' '))
+	{
+		words.push_back(word);
+	}
+	return words;
 }
 
 long parse_int(std::string number)
 {
-    if (units.find(number) != units.end())
-    {
-        return units[number];
-    }
-    else
-    {
-        std::vector<int> numbers;
-        std::vector<std::string> arrayOrWords = splitString(number);
-        for (int i = 0; i < arrayOrWords.size(); i++)
-        {
-            if (arrayOrWords[i] == "and")
-            {
-                continue;
-            }
-            if (units.find(arrayOrWords[i]) != units.end())
-            {
-                numbers.push_back(units[arrayOrWords[i]]);
-            }
-            else if (arrayOrWords[i].find('-') != std::string::npos)
-            {
-                std::vector<std::string> words;
-                std::stringstream arrayWord(arrayOrWords[i]);
-                std::string part;
-                while (std::getline(arrayWord, part, '-'))
-                {
-                    words.push_back(units);
-                }
-                numbers.push_back(units[words[0]] * units[words[1]])
-            }
-        }
-        while (numbers.size() > 1)
-        {
-            std::cout << numbers[0] << " " << numbers[1] << std::endl;
-            if (numbers[0] < numbers[1])
-            {
-                numbers[0] = numbers[0] * numbers[1];
-                numbers.erase(numbers.begin() + 1);
-            }
-            else
-            {
-                numbers[0] += numbers[1];
-                numbers.erase(numbers.begin() + 1);
-            }
-        }
-        return numbers[0];
-    }
+	if (units.find(number) != units.end())
+	{
+		return units[number];
+	}
+	else
+	{
+		std::vector<int> numbers;
+		std::vector<std::string> vectorOfWords = splitString(number);
+		for (auto i : vectorOfWords)
+		{
+			if (units.find(i) != units.end())
+			{
+				numbers.push_back(units[i])
+			}
+			else if (i.find('-') != std::string::npos)
+			{
+				numbers.push_back(units[i.substr(0, i.find('-'))])
+				numbers.push_back(units[i.substr(i.find('-') + 1, i.size())])
+			}
+		}
+		for(auto i : numbers) {
+			std::cout << i << std::endl;
+		}
+	}
 }
 
 int main()
 {
-    std::string number;
-    std::getline(std::cin, number);
-    std::cout << parse_int(number) << std::endl;
-    return 0;
+	std::string number;
+	std::getline(std::cin, number);
+	std::cout << parse_int(number) << std::endl;
+	return 0;
 }
