@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 std::map<std::string, int> units = {
 	{"zero", 0},
@@ -51,12 +52,12 @@ std::vector<std::string> splitSentence(const std::string &str, char separator)
 
 long parse_int(std::string number)
 {
-	if (units.find(number) != units.end()) return units[number];
+	if (units.find(number) != units.end())
+		return units[number];
 	std::vector<int> numbers;
 	std::vector<std::string> numberVector = splitSentence(number, ' ');
 	for (auto i : numberVector)
 	{
-		std::cout << i << std::endl;
 		if (i == "and")
 			continue;
 		if (units.find(i) != units.end())
@@ -70,31 +71,62 @@ long parse_int(std::string number)
 			numbers.push_back(units[i.substr(i.find('-') + 1)]);
 		}
 	}
-	for (auto i : numbers)
+	if (numbers[1] == 100 && std::find(numbers.begin(), numbers.end(), 1000) == numbers.end())
 	{
-		std::cout << i << std::endl;
+		while (numbers.size() > 1)
+		{
+			if (numbers[0] > numbers[1])
+			{
+				numbers[0] = numbers[0] + numbers[1];
+				numbers.erase(numbers.begin() + 1);
+			}
+			else
+			{
+				numbers[0] = numbers[0] * numbers[1];
+				numbers.erase(numbers.begin() + 1);
+			}
+		}
+		return numbers[0];
 	}
-	while (numbers.size() > 1)
+	else
 	{
-		for ()
+		while (std::find(numbers.begin(), numbers.end(), 1000) != numbers.end())
+		{
+			if (numbers[0] < numbers[1])
+			{
+				numbers[0] = numbers[0] * numbers[1];
+			}
+			else
+			{
+				numbers[0] += numbers[1];
+			}
+			if(numbers[1] == 1000){
+				numbers.erase(numbers.begin() + 1);
+				break;
+			}else{
+				numbers.erase(numbers.begin() + 1);
+			}
+		}
+		std::vector<int> subNum(numbers.begin()+1, numbers.end());
+		while (subNum.size() > 1)
+		{
+			for(auto i:subNum){
+				std::cout << "This is anoterh : ";
+				std::cout << i << std::endl;
+				std::cout << "And now the size is :"  << subNum.size() << std::endl;
+			}
+			if (subNum[0] > subNum[1])
+			{
+				subNum[0] += subNum[1];
+			}
+			else
+			{
+				subNum[0] *= subNum[1];
+			}
+			subNum.erase(subNum.begin() + 1);
+		}
+		return numbers[0] + subNum[0];
 	}
-	// while (numbers.size() > 1)
-	// {
-	//     for (int i = 0; i < numbers.size() - 1; i++)
-	//     {
-	//         if (numbers[i] < numbers[i + 1])
-	//         {
-	//             numbers[i] = numbers[i] * numbers[i + 1];
-	//             numbers.erase(numbers.begin() + i + 1);
-	//         }
-	//         else
-	//         {
-	//             numbers[i] += numbers[i + 1];
-	//             numbers.erase(numbers.begin() + i + 1);
-	//         }
-	//     }
-	// }
-	return numbers[0];
 }
 
 int main()
