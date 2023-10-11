@@ -71,7 +71,7 @@ long parse_int(std::string number)
 			numbers.push_back(units[i.substr(i.find('-') + 1)]);
 		}
 	}
-	if (numbers[1] == 100 && std::find(numbers.begin(), numbers.end(), 1000) == numbers.end())
+	if (numbers[1] == 100 && std::find(numbers.begin(), numbers.end(), 1000) == numbers.end() && numbers.size() > 1)
 	{
 		while (numbers.size() > 1)
 		{
@@ -110,11 +110,6 @@ long parse_int(std::string number)
 		std::vector<int> subNum(numbers.begin()+1, numbers.end());
 		while (subNum.size() > 1)
 		{
-			for(auto i:subNum){
-				std::cout << "This is anoterh : ";
-				std::cout << i << std::endl;
-				std::cout << "And now the size is :"  << subNum.size() << std::endl;
-			}
 			if (subNum[0] > subNum[1])
 			{
 				subNum[0] += subNum[1];
