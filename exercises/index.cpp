@@ -25,7 +25,7 @@ int main()
 {
 	string name;
 	cout << "Enter the name of the student :" ; 
-	cin >> name ;
+	getline(cin,name);
 	Student one(name);
 	one.displayName();
 	return 0;
