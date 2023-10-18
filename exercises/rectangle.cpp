@@ -21,11 +21,11 @@ Rectangle::Rectangle(int w,int h)
     this->length = h;
 }
 int Rectangle::getWidth(){
-    return this->width;
+    return width;
 }
 
 int Rectangle::getLength(){
-    return this->length;
+    return length;
 }
 void Rectangle::setWidth(int w){
     this->width = w;
@@ -36,11 +36,11 @@ void Rectangle::setLength(int h){
 }
 
 int Rectangle::getArea(){
-    return this->width * this->length;
+    return width * length;
 }
 
 int Rectangle::getPerimeter(){
-    return (this->width * 2) + (this->length *2)
+    return (width * 2) + (length *2);
 }
 
 
@@ -75,12 +75,14 @@ int main(){
     case 3:
         int w;
         cin >> w;
-        cout << rect.setWidth(w) << endl;
+        rect.setWidth(w);
+        cout <<rect.getWidth()<< endl;
         break;
     case 4:
         int h;
         cin >> h;
-        cout << rect.setLength(h) << endl;
+         rect.setLength(h);
+        cout <<rect.getLength()<< endl;
         break;
     case 5:
         cout << rect.getArea() << endl;
