@@ -17,12 +17,16 @@ Student::Student(string name)
 
 void Student::displayName()
 {
+	if(this->name.empty()) cout << "There is no name" << endl;
 	cout << "Student name is " << name << endl;
 }
 
 int main()
 {
-	Student one("Mugisha Yves");
+	string name;
+	cout << "Enter the name of the student :" ; 
+	cin >> name ;
+	Student one(name);
 	one.displayName();
 	return 0;
 }
